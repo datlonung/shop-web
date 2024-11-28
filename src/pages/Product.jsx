@@ -88,10 +88,10 @@ const Product = () => {
                 className="btn btn-outline-dark"
                 onClick={() => addProduct(product)}
               >
-                Add to Cart
+                Thêm vào giỏ hàng
               </button>
               <Link to="/cart" className="btn btn-dark mx-3">
-                Go to Cart
+                Đi tới giỏ hàng
               </Link>
             </div>
           </div>
@@ -151,13 +151,13 @@ const Product = () => {
                       to={"/product/" + item.id}
                       className="btn btn-dark m-1"
                     >
-                      Buy Now
+                      Mua ngay
                     </Link>
                     <button
                       className="btn btn-dark m-1"
                       onClick={() => addProduct(item)}
                     >
-                      Add to Cart
+                      Thêm vào giỏ hàng
                     </button>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ const Product = () => {
         <div className="row">{loading ? <Loading /> : <ShowProduct />}</div>
         <div className="row my-5 py-5">
           <div className="d-none d-md-block">
-          <h2 className="">You may also Like</h2>
+          <h2 className="">Bạn có thể sẽ thích</h2>
             <Marquee
               pauseOnHover={true}
               pauseOnClick={true}
