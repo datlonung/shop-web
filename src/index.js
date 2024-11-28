@@ -6,8 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-
-import { Home, Product, Products, AboutPage, ContactPage, Cart, Login, Register, Checkout, PageNotFound } from "./pages"
+import { Home, Product, Products, AboutPage, ContactPage, Cart, Login, Register, Checkout, PageNotFound, Admin } from "./pages"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,8 +22,8 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/admin" element={<Admin />} /> {/* Add this line */}
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/product/*" element={<PageNotFound />} />
       </Routes>
     </Provider>
   </BrowserRouter>

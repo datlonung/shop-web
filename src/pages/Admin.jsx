@@ -58,30 +58,44 @@ const Admin = () => {
     <>
       <Navbar />
       <div className="container my-3 py-3">
-        <h1 className="text-center">Admin Page</h1>
+        <h1 className="text-center">Trang Admin</h1>
         <hr />
         <div className="row">
           {data.map(item => (
-            <div key={item.id} className="col-md-4">
-              <div className="card">
+            <div key={item.id} className="col-md-4 mb-4">
+              <div className="card h-100">
                 <div className="card-body">
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.description}</p>
-                  <button className="btn btn-primary" onClick={() => handleUpdate(item.id)}>Update</button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
+                  <button className="btn btn-primary me-2" onClick={() => handleUpdate(item.id)}>Update</button>
+                  <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Xóa</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="my-3">
-          <h2>Create New Product</h2>
-          <input type="text" placeholder="Title" value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} />
-          <input type="text" placeholder="Price" value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
-          <input type="text" placeholder="Description" value={newProduct.description} onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })} />
-          <input type="text" placeholder="Image URL" value={newProduct.image} onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })} />
-          <input type="text" placeholder="Category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
-          <button className="btn btn-success" onClick={handleCreate}>Create</button>
+        <div className="my-5">
+          <h2 className="mb-4">Tạo sản phẩm mới</h2>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <input type="text" className="form-control" placeholder="Title" value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} />
+            </div>
+            <div className="col-md-6 mb-3">
+              <input type="text" className="form-control" placeholder="Price" value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
+            </div>
+            <div className="col-md-12 mb-3">
+              <input type="text" className="form-control" placeholder="Description" value={newProduct.description} onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })} />
+            </div>
+            <div className="col-md-12 mb-3">
+              <input type="text" className="form-control" placeholder="Image URL" value={newProduct.image} onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })} />
+            </div>
+            <div className="col-md-12 mb-3">
+              <input type="text" className="form-control" placeholder="Category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
+            </div>
+            <div className="col-md-12 text-center">
+              <button className="btn btn-success btn-lg" onClick={handleCreate}>Create</button>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
