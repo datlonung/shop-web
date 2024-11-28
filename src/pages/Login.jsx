@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 
 const Login = () => {
@@ -11,7 +11,12 @@ const Login = () => {
     e.preventDefault();
     if (username === 'admin' && password === 'admin123') {
       localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('role', 'admin');
       navigate('/admin');
+    } else if (username === 'tan' && password === 'tan123') {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('role', 'user');
+      navigate('/');
     } else {
       alert('Invalid credentials');
     }
