@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Admin = () => {
   const [data, setData] = useState([]);
   const [newProduct, setNewProduct] = useState({ title: '', price: '', description: '', image: '', category: '' });
+  const [editingProductId, setEditingProductId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,19 +33,26 @@ const Admin = () => {
     });
     const result = await response.json();
     setData([...data, result]);
+    setNewProduct({ title: '', price: '', description: '', image: '', category: '' });
   };
 
-  const handleUpdate = async (id) => {
-    const updatedProduct = { ...newProduct, id };
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+  const handleUpdate = async () => {
+    const response = await fetch(`https://fakestoreapi.com/products/${editingProductId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(updatedProduct)
+      body: JSON.stringify(newProduct)
     });
     const result = await response.json();
-    setData(data.map(item => (item.id === id ? result : item)));
+    setData(data.map(item => (item.id === editingProductId ? result : item)));
+    setNewProduct({ title: '', price: '', description: '', image: '', category: '' });
+    setEditingProductId(null);
+  };
+
+  const handleEditClick = (product) => {
+    setNewProduct(product);
+    setEditingProductId(product.id);
   };
 
   const handleDelete = async (id) => {
@@ -67,7 +75,7 @@ const Admin = () => {
                 <div className="card-body">
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.description}</p>
-                  <button className="btn btn-primary me-2" onClick={() => handleUpdate(item.id)}>Update</button>
+                  <button className="btn btn-primary me-2" onClick={() => handleEditClick(item)}>Update</button>
                   <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Xóa</button>
                 </div>
               </div>
@@ -75,7 +83,7 @@ const Admin = () => {
           ))}
         </div>
         <div className="my-5">
-          <h2 className="mb-4">Tạo sản phẩm mới</h2>
+          <h2 className="mb-4">{editingProductId ? 'Cập nhật sản phẩm' : 'Tạo sản phẩm mới'}</h2>
           <div className="row">
             <div className="col-md-6 mb-3">
               <input type="text" className="form-control" placeholder="Title" value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} />
@@ -93,7 +101,9 @@ const Admin = () => {
               <input type="text" className="form-control" placeholder="Category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
             </div>
             <div className="col-md-12 text-center">
-              <button className="btn btn-success btn-lg" onClick={handleCreate}>Create</button>
+              <button className="btn btn-success btn-lg" onClick={editingProductId ? handleUpdate : handleCreate}>
+                {editingProductId ? 'Cập nhật' : 'Tạo'}
+              </button>
             </div>
           </div>
         </div>
