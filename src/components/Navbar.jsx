@@ -1,9 +1,17 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const state = useSelector(state => state.handleCart)
+    const state = useSelector(state => state.handleCart);
+    const username = localStorage.getItem('username'); // Lấy tên đăng nhập từ localStorage
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('username');
+        window.location.reload(); // Làm mới trang để cập nhật trạng thái
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
             <div className="container">
@@ -28,16 +36,23 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
-                        <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</NavLink>
+                        {username ? (
+                            <>
+                                <span className="navbar-text m-2">Xin chào, {username}</span>
+                                <button onClick={handleLogout} className="btn btn-outline-dark m-2">Đăng xuất</button>
+                            </>
+                        ) : (
+                            <>
+                                <NavLink to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
+                                <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</NavLink>
+                            </>
+                        )}
                         <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Cart ({state.length}) </NavLink>
                     </div>
                 </div>
-
-
             </div>
         </nav>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

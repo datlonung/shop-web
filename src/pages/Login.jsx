@@ -11,14 +11,16 @@ const Login = () => {
     e.preventDefault();
     if (username === 'admin' && password === 'admin123') {
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('role', 'admin');
+      localStorage.setItem('username', 'admin'); // Lưu tên đăng nhập
+      alert('Đăng nhập thành công! Chào mừng, admin!');
       navigate('/admin');
     } else if (username === 'tan' && password === 'tan123') {
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('role', 'user');
+      localStorage.setItem('username', 'tan'); // Lưu tên đăng nhập
+      alert('Đăng nhập thành công! Chào mừng, tan!');
       navigate('/');
     } else {
-      alert('Invalid credentials');
+      alert('Thông tin đăng nhập không hợp lệ.');
     }
   };
 
