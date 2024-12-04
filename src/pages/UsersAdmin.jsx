@@ -20,6 +20,11 @@ const UsersAdmin = () => {
   };
 
   const handleCreateOrUpdateUser = async () => {
+    if (!newUser || !newUser.name || !newUser.name.firstname || !newUser.name.lastname) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
     const url = editingItemId ? `https://fakestoreapi.com/users/${editingItemId}` : 'https://fakestoreapi.com/users';
     const method = editingItemId ? 'PUT' : 'POST';
     const response = await fetch(url, {
@@ -29,7 +34,9 @@ const UsersAdmin = () => {
       },
       body: JSON.stringify(newUser)
     });
+
     const result = await response.json();
+
     if (editingItemId) {
       setUsers(users.map(user => (user.id === editingItemId ? result : user)));
       toast.success('User updated successfully!');
@@ -37,6 +44,7 @@ const UsersAdmin = () => {
       setUsers([...users, result]);
       toast.success('User created successfully!');
     }
+
     setNewUser({ email: '', name: { firstname: '', lastname: '' } });
     setEditingItemId(null);
   };
