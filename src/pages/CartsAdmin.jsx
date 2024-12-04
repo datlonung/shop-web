@@ -57,7 +57,7 @@ const CartsAdmin = () => {
   return (
     <>
       <div className="container my-3 py-3">
-        <h1 className="text-center">Manage Carts</h1>
+        <h1 className="text-center">Quản lý giỏ hàng</h1>
         <hr />
         <div className="row">
           <div className="col-md-6 mb-3">
@@ -71,7 +71,7 @@ const CartsAdmin = () => {
         </div>
 
         <div className="my-5">
-          <h2 className="mb-4">Carts List</h2>
+          <h2 className="mb-4">Danh sách giỏ hàng</h2>
           <div className="row">
             {carts.map(cart => (
               <div key={cart.id} className="col-md-4 mb-4">

@@ -45,12 +45,12 @@ const Admin = () => {
     <>
       <Navbar />
       <div className="container my-3 py-3">
-        <h1 className="text-center">Admin Page</h1>
+        <h1 className="text-center">Trang Admin</h1>
         <hr />
         <div className="my-5">
-          <h2 className="mb-4">Manage Products</h2>
+          <h2 className="mb-4">Quản lý sản phẩm</h2>
           <div className="text-center mb-4">
-            <Link to="/admin/products" className="btn btn-primary">Go to Products Management</Link>
+            <Link to="/admin/products" className="btn btn-primary">Đi tới quản lý sản phẩm</Link>
           </div>
           <div className="row">
             {data.map(item => (
@@ -68,9 +68,9 @@ const Admin = () => {
 
 
         <div className="my-5">
-          <h2 className="mb-4">Manage Users</h2>
+          <h2 className="mb-4">Quản lý người dùng</h2>
           <div className="text-center mb-4">
-            <Link to="/admin/users" className="btn btn-primary">Go to Users Management</Link>
+            <Link to="/admin/users" className="btn btn-primary">Đi tới quản lý người dùng</Link>
           </div>
           <div className="row">
             {users.map(user => (
@@ -87,9 +87,9 @@ const Admin = () => {
         </div>
 
         <div className="my-5">
-          <h2 className="mb-4">Manage Carts</h2>
+          <h2 className="mb-4">Quản lý giỏ hàng</h2>
           <div className="text-center mb-4">
-            <Link to="/admin/carts" className="btn btn-primary">Go to Carts Management</Link>
+            <Link to="/admin/carts" className="btn btn-primary">Đi tới quản lý giỏ hàng</Link>
           </div>
           <div className="row">
             {carts.map(cart => (
