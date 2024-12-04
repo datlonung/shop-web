@@ -1,15 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Footer, Navbar } from "../components";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { clearCart } from "../redux/action";
 
 const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    if (isFormValid()) {
+      setIsSubmitted(true);
+      dispatch(clearCart());
+      toast.success('Thanh toán thành công!');
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  };
+
+  const isFormValid = () => {
+    const form = document.querySelector('.needs-validation');
+    return form.checkValidity();
   };
 
   const EmptyCart = () => {
@@ -308,6 +331,7 @@ const Checkout = () => {
         )}
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

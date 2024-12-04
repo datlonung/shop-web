@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
@@ -15,9 +15,19 @@ const Product = () => {
   const [loading2, setLoading2] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const addProduct = (product) => {
     dispatch(addCart(product));
+  };
+
+  const handleAddToCart = (product) => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else {
+      dispatch(addCart(product));
+    }
   };
 
   useEffect(() => {
@@ -147,15 +157,12 @@ const Product = () => {
                     <li className="list-group-item lead">${product.price}</li>
                   </ul> */}
                   <div className="card-body">
-                    <Link
-                      to={"/product/" + item.id}
-                      className="btn btn-dark m-1"
-                    >
-                      Mua ngay
+                    <Link to={"/product/" + item.id} className="btn btn-dark m-1">
+                      Xem
                     </Link>
                     <button
                       className="btn btn-dark m-1"
-                      onClick={() => addProduct(item)}
+                      onClick={() => handleAddToCart(item)}
                     >
                       Thêm vào giỏ hàng
                     </button>

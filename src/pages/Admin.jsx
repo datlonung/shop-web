@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Footer, Navbar } from "../components";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Admin = () => {
   const [data, setData] = useState([]);
-  const [newProduct, setNewProduct] = useState({ title: '', price: '', description: '', image: '', category: '' });
-  const [editingProductId, setEditingProductId] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [carts, setCarts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +17,8 @@ const Admin = () => {
       navigate('/login');
     } else {
       fetchData();
+      fetchUsers();
+      fetchCarts();
     }
   }, []);
 
@@ -23,90 +28,84 @@ const Admin = () => {
     setData(result);
   };
 
-  const handleCreate = async () => {
-    const response = await fetch('https://fakestoreapi.com/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newProduct)
-    });
+  const fetchUsers = async () => {
+    const response = await fetch('https://fakestoreapi.com/users');
     const result = await response.json();
-    setData([...data, result]);
-    setNewProduct({ title: '', price: '', description: '', image: '', category: '' });
+    setUsers(result);
   };
 
-  const handleUpdate = async () => {
-    const response = await fetch(`https://fakestoreapi.com/products/${editingProductId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newProduct)
-    });
+
+  const fetchCarts = async () => {
+    const response = await fetch('https://fakestoreapi.com/carts');
     const result = await response.json();
-    setData(data.map(item => (item.id === editingProductId ? result : item)));
-    setNewProduct({ title: '', price: '', description: '', image: '', category: '' });
-    setEditingProductId(null);
-  };
-
-  const handleEditClick = (product) => {
-    setNewProduct(product);
-    setEditingProductId(product.id);
-  };
-
-  const handleDelete = async (id) => {
-    await fetch(`https://fakestoreapi.com/products/${id}`, {
-      method: 'DELETE'
-    });
-    setData(data.filter(item => item.id !== id));
+    setCarts(result);
   };
 
   return (
     <>
       <Navbar />
       <div className="container my-3 py-3">
-        <h1 className="text-center">Trang Admin</h1>
+        <h1 className="text-center">Admin Page</h1>
         <hr />
-        <div className="row">
-          {data.map(item => (
-            <div key={item.id} className="col-md-4 mb-4">
-              <div className="card h-100">
-                <div className="card-body">
-                  <h5 className="card-title">{item.title}</h5>
-                  <p className="card-text">{item.description}</p>
-                  <button className="btn btn-primary me-2" onClick={() => handleEditClick(item)}>Update</button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Xóa</button>
+        <div className="my-5">
+          <h2 className="mb-4">Manage Products</h2>
+          <div className="text-center mb-4">
+            <Link to="/admin/products" className="btn btn-primary">Go to Products Management</Link>
+          </div>
+          <div className="row">
+            {data.map(item => (
+              <div key={item.id} className="col-md-4 mb-4">
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h5 className="card-title">{item.title}</h5>
+                    <p className="card-text">{item.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="my-5">
-          <h2 className="mb-4">{editingProductId ? 'Cập nhật sản phẩm' : 'Tạo sản phẩm mới'}</h2>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <input type="text" className="form-control" placeholder="Title" value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input type="text" className="form-control" placeholder="Price" value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
-            </div>
-            <div className="col-md-12 mb-3">
-              <input type="text" className="form-control" placeholder="Description" value={newProduct.description} onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })} />
-            </div>
-            <div className="col-md-12 mb-3">
-              <input type="text" className="form-control" placeholder="Image URL" value={newProduct.image} onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })} />
-            </div>
-            <div className="col-md-12 mb-3">
-              <input type="text" className="form-control" placeholder="Category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
-            </div>
-            <div className="col-md-12 text-center">
-              <button className="btn btn-success btn-lg" onClick={editingProductId ? handleUpdate : handleCreate}>
-                {editingProductId ? 'Cập nhật' : 'Tạo'}
-              </button>
-            </div>
+            ))}
           </div>
         </div>
+
+
+        <div className="my-5">
+          <h2 className="mb-4">Manage Users</h2>
+          <div className="text-center mb-4">
+            <Link to="/admin/users" className="btn btn-primary">Go to Users Management</Link>
+          </div>
+          <div className="row">
+            {users.map(user => (
+              <div key={user.id} className="col-md-4 mb-4">
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h5 className="card-title">{user.name.firstname} {user.name.lastname}</h5>
+                    <p className="card-text">{user.email}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="my-5">
+          <h2 className="mb-4">Manage Carts</h2>
+          <div className="text-center mb-4">
+            <Link to="/admin/carts" className="btn btn-primary">Go to Carts Management</Link>
+          </div>
+          <div className="row">
+            {carts.map(cart => (
+              <div key={cart.id} className="col-md-4 mb-4">
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h5 className="card-title">Cart ID: {cart.id}</h5>
+                    <p className="card-text">User ID: {cart.userId}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <ToastContainer />
       </div>
       <Footer />
     </>
