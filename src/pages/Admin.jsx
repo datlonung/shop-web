@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Footer, Navbar } from "../components";
 import { useNavigate, Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Admin = () => {
   const [data, setData] = useState([]);
   const [users, setUsers] = useState([]);
-  const [employees, setEmployees] = useState([]);
   const [carts, setCarts] = useState([]);
   const navigate = useNavigate();
 
