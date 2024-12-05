@@ -71,7 +71,7 @@ const ProductsAdmin = () => {
   return (
     <>
       <div className="container my-3 py-3">
-        <h1 className="text-center">Manage Products</h1>
+        <h1 className="text-center">Quản lý sản phẩm</h1>
         <hr />
         <div className="row">
           <div className="col-md-6 mb-3">
@@ -144,7 +144,7 @@ const ProductsAdmin = () => {
         </div>
 
         <div className="my-5">
-          <h2 className="mb-4">Products List</h2>
+          <h2 className="mb-4">Danh sách sản phẩm</h2>
           <div className="row">
             {data.map((item) => (
               <div key={item.id} className="col-md-4 mb-4">
