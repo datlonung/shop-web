@@ -33,7 +33,6 @@ const Admin = () => {
     setUsers(result);
   };
 
-
   const fetchCarts = async () => {
     const response = await fetch('https://fakestoreapi.com/carts');
     const result = await response.json();
@@ -43,70 +42,108 @@ const Admin = () => {
   return (
     <>
       <Navbar />
-      <div className="container my-3 py-3">
-        <h1 className="text-center">Trang Admin</h1>
-        <hr />
-        <div className="my-5">
-          <h2 className="mb-4">Quản lý sản phẩm</h2>
-          <div className="text-center mb-4">
-            <Link to="/admin/products" className="btn btn-primary">Đi tới quản lý sản phẩm</Link>
-          </div>
-          <div className="row">
-            {data.map(item => (
-              <div key={item.id} className="col-md-4 mb-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h5 className="card-title">{item.title}</h5>
-                    <p className="card-text">{item.description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="container-fluid">
+        <div className="row">
+          <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div className="position-sticky pt-3">
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/admin">
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin/products">
+                    Quản lý sản phẩm
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin/users">
+                    Quản lý người dùng
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin/carts">
+                    Quản lý giỏ hàng
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 className="h2">Dashboard</h1>
+            </div>
+
+            <h2>Quản lý người dùng</h2>
+            <div className="table-responsive">
+              <table className="table table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map(user => (
+                    <tr key={user.id}>
+                      <td>{user.name.firstname}</td>
+                      <td>{user.name.lastname}</td>
+                      <td>{user.email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <h2>Quản lý sản phẩm</h2>
+            <div className="table-responsive">
+              <table className="table table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map(product => (
+                    <tr key={product.id}>
+                      <td>{product.title}</td>
+                      <td>{product.price}</td>
+                      <td>{product.category}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <h2>Quản lý giỏ hàng</h2>
+            <div className="table-responsive">
+              <table className="table table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>Cart ID</th>
+                    <th>User ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {carts.map(cart => (
+                    <tr key={cart.id}>
+                      <td>{cart.id}</td>
+                      <td>{cart.userId}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </main>
         </div>
-
-
-        <div className="my-5">
-          <h2 className="mb-4">Quản lý người dùng</h2>
-          <div className="text-center mb-4">
-            <Link to="/admin/users" className="btn btn-primary">Đi tới quản lý người dùng</Link>
-          </div>
-          <div className="row">
-            {users.map(user => (
-              <div key={user.id} className="col-md-4 mb-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h5 className="card-title">{user.name.firstname} {user.name.lastname}</h5>
-                    <p className="card-text">{user.email}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="my-5">
-          <h2 className="mb-4">Quản lý giỏ hàng</h2>
-          <div className="text-center mb-4">
-            <Link to="/admin/carts" className="btn btn-primary">Đi tới quản lý giỏ hàng</Link>
-          </div>
-          <div className="row">
-            {carts.map(cart => (
-              <div key={cart.id} className="col-md-4 mb-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h5 className="card-title">Cart ID: {cart.id}</h5>
-                    <p className="card-text">User ID: {cart.userId}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <ToastContainer />
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };
